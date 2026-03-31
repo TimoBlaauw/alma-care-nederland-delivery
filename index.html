@@ -1,0 +1,716 @@
+<!--
+  Delivery page for Alma Care Nederland
+  Language: Dutch (nl)
+  Contact: Sinan
+-->
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gebouwd voor Alma Care — TrafficToTalks</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      color: #1a1a1a;
+      background: #ffffff;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    :root {
+      --accent: #af0065;
+      --accent-light: #d94d93;
+      --accent-dark: #8a0050;
+      --deep: #2ea3f2;
+      --dark: #454343;
+      --light: #f4f4f4;
+      --subtle: #faf0f5;
+      --border: #e0d0d8;
+      --muted: #666666;
+      --white: #ffffff;
+    }
+
+    .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 80px 0; }
+    @media (max-width: 768px) { section { padding: 56px 0; } }
+
+    /* ===== TOP BAR ===== */
+    .top-bar {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      background: var(--white);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .top-bar .container { display: flex; align-items: center; justify-content: center; gap: 14px; }
+    .top-bar .logos-wrap { display: flex; align-items: center; justify-content: center; gap: 14px; width: 100%; }
+    .top-bar .logo-ttt { height: 38px; width: auto; }
+    .top-bar .logo-clinic { height: 34px; width: auto; }
+    .top-bar .divider { color: var(--muted); font-size: 20px; font-weight: 300; line-height: 1; }
+
+    /* ===== HERO ===== */
+    .hero { text-align: center; padding: 80px 0 60px; }
+    .hero h1 { font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 800; color: var(--deep); margin-bottom: 16px; line-height: 1.2; }
+    .hero h1 span { color: var(--accent); }
+    .hero .subtitle { font-size: 1.05rem; color: var(--muted); max-width: 640px; margin: 0 auto 40px; line-height: 1.7; }
+    .video-placeholder {
+      max-width: 640px; margin: 0 auto; aspect-ratio: 16/9; background: var(--deep);
+      border-radius: 16px; display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: 12px; color: rgba(255,255,255,0.5); font-size: 0.9rem;
+    }
+    .video-placeholder .play-btn {
+      width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center;
+    }
+    .video-placeholder .play-btn svg { fill: rgba(255,255,255,0.7); }
+
+    /* ===== WHAT'S INSIDE ===== */
+    .whats-inside { background: var(--light); text-align: center; }
+    .whats-inside h2 { font-size: 1.5rem; font-weight: 700; color: var(--deep); margin-bottom: 40px; }
+    .inside-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    @media (max-width: 768px) { .inside-grid { grid-template-columns: repeat(2, 1fr); } }
+    .inside-card {
+      background: var(--white); border-radius: 16px; padding: 28px 20px;
+      border: 1px solid var(--border); transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .inside-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+    .inside-card .icon-wrap {
+      width: 48px; height: 48px; border-radius: 12px; background: var(--subtle);
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;
+    }
+    .inside-card .icon-wrap svg { width: 22px; height: 22px; stroke: var(--dark); fill: none; stroke-width: 1.8; }
+    .inside-card h3 { font-size: 0.85rem; font-weight: 700; color: var(--deep); margin-bottom: 4px; }
+    .inside-card p { font-size: 0.75rem; color: var(--muted); }
+
+    /* ===== LANDING PAGE PREVIEW ===== */
+    .landing-preview { text-align: center; }
+    .landing-preview h2 { font-size: 1.75rem; font-weight: 700; color: var(--deep); margin-bottom: 8px; }
+    .landing-preview .sub { color: var(--muted); font-size: 1rem; margin-bottom: 40px; }
+    .browser-frame { margin: 0 auto 32px; border-radius: 12px; overflow: hidden; box-shadow: 0 12px 40px rgba(0,0,0,0.12); border: 1px solid var(--border); }
+    .browser-bar { background: #f5f5f5; padding: 10px 16px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #e5e5e5; }
+    .browser-dot { width: 10px; height: 10px; border-radius: 50%; background: #ddd; }
+    .browser-bar .url { flex: 1; background: #fff; border-radius: 6px; padding: 4px 12px; font-size: 0.75rem; color: var(--muted); border: 1px solid #e5e5e5; margin-left: 8px; }
+    .browser-frame img { width: 100%; display: block; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px; padding: 14px 32px;
+      background: var(--accent); color: var(--white); font-weight: 700; font-size: 0.95rem;
+      border-radius: 50px; border: none; cursor: pointer; transition: background 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--accent-dark); transform: translateY(-2px); }
+    .btn-primary svg { width: 16px; height: 16px; }
+
+    /* ===== META ADS ===== */
+    .meta-ads { text-align: center; background: var(--light); }
+    .meta-ads h2 { font-size: 1.75rem; font-weight: 700; color: var(--deep); margin-bottom: 4px; }
+    .meta-ads .sub { color: var(--muted); font-size: 1rem; margin-bottom: 32px; }
+    .ads-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
+    .ad-card { flex: 1; min-width: 120px; max-width: 180px; text-align: center; cursor: pointer; }
+    @media (max-width: 768px) { .ad-card { min-width: 100px; max-width: none; flex: 1; } }
+    .ad-card .ad-img-wrap {
+      position: relative; border-radius: 12px; overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: all 0.3s;
+      aspect-ratio: 1; background: #eee; border: 3px solid transparent;
+    }
+    .ad-card.active .ad-img-wrap { border-color: var(--accent); box-shadow: 0 8px 24px rgba(0,0,0,0.15); transform: translateY(-4px); }
+    .ad-card:hover .ad-img-wrap { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+    .ad-card .ad-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .ad-card .funnel-tag { display: inline-block; margin-top: 10px; padding: 3px 10px; border-radius: 20px; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    .tag-cold { background: #dbeafe; color: #1e40af; }
+    .tag-consideration { background: #d1fae5; color: #065f46; }
+    .tag-mid { background: #fef3c7; color: #92400e; }
+    .tag-bottom { background: #fee2e2; color: #991b1b; }
+    .tag-education { background: #ede9fe; color: #5b21b6; }
+
+    /* Ad copy detail panel */
+    .ad-detail-panel {
+      margin: 0 auto 32px;
+      display: grid; grid-template-columns: 300px 1fr; gap: 20px; text-align: left;
+    }
+    @media (max-width: 768px) { .ad-detail-panel { grid-template-columns: 1fr; }  }
+    .ad-detail-img {
+      position: relative; border-radius: 16px; overflow: hidden;
+      aspect-ratio: 1; box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    .ad-detail-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .ad-detail-img .ad-download-btn {
+      position: absolute; bottom: 12px; left: 12px; right: 12px;
+      padding: 8px; background: rgba(255,255,255,0.95); border: 1px solid var(--border);
+      border-radius: 8px; font-size: 0.75rem; font-weight: 600; color: var(--dark);
+      cursor: pointer; transition: background 0.2s; text-align: center; display: block;
+      backdrop-filter: blur(8px); text-decoration: none;
+    }
+    .ad-detail-img .ad-download-btn:hover { background: var(--white); }
+    .ad-detail-copy {
+      background: var(--white); border-radius: 16px; border: 1px solid var(--border);
+      padding: 28px 32px; display: flex; flex-direction: column; gap: 14px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+    }
+    .ad-detail-copy .copy-label {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      color: var(--accent); margin-bottom: 2px;
+    }
+    .ad-detail-copy .copy-primary { font-size: 0.85rem; color: #333; line-height: 1.7; }
+    .ad-detail-copy .copy-headline { font-size: 1.05rem; font-weight: 700; color: var(--deep); }
+    .ad-detail-copy .copy-link-desc { font-size: 0.82rem; color: var(--muted); }
+    .ad-detail-copy .copy-cta-btn {
+      display: inline-flex; align-items: center; gap: 6px; padding: 8px 20px;
+      background: var(--subtle); color: var(--dark); font-weight: 600; font-size: 0.8rem;
+      border-radius: 8px; border: 1px solid var(--border); width: fit-content;
+    }
+
+    .meta-ads .context-box {
+      margin: 0 auto; padding: 32px 40px;
+      background: var(--deep); border-radius: 16px;
+      text-align: left; position: relative; overflow: hidden;
+    }
+    .meta-ads .context-box::before {
+      content: '\201C'; position: absolute; top: -10px; left: 20px;
+      font-size: 8rem; color: rgba(255,255,255,0.06); font-family: Georgia, serif; line-height: 1;
+    }
+    .meta-ads .context-box p {
+      font-size: 0.95rem; color: rgba(255,255,255,0.85); line-height: 1.8;
+      position: relative; z-index: 1;
+    }
+
+    /* ===== VIDEO SCRIPTS ===== */
+    .video-scripts { text-align: center; }
+    .video-scripts h2 { font-size: 1.75rem; font-weight: 700; color: var(--deep); margin-bottom: 4px; }
+    .video-scripts .sub { color: var(--muted); font-size: 1rem; margin-bottom: 40px; }
+    .scripts-list { margin: 0 auto; text-align: left; }
+    .script-card { border: 1px solid var(--border); border-radius: 16px; margin-bottom: 16px; overflow: hidden; background: var(--white); transition: box-shadow 0.2s; }
+    .script-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.05); }
+    .script-header { padding: 20px 24px; display: flex; align-items: center; gap: 16px; cursor: pointer; user-select: none; }
+    .script-number { width: 36px; height: 36px; border-radius: 10px; background: var(--accent); color: var(--white); font-weight: 800; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .script-title { flex: 1; font-weight: 700; font-size: 1rem; color: var(--deep); }
+    .script-chevron { transition: transform 0.3s; color: var(--muted); }
+    .script-card.open .script-chevron { transform: rotate(180deg); }
+    .script-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+    .script-card.open .script-body { max-height: 2000px; }
+    .script-content { padding: 0 24px 24px; padding-left: 76px; }
+    .script-content h4 { font-size: 0.8rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+    .script-content .why-text { font-size: 0.9rem; color: #555; margin-bottom: 20px; line-height: 1.7; }
+    .script-text {
+      background: var(--light); border-radius: 12px; padding: 24px; font-size: 0.9rem;
+      color: #333; line-height: 2; margin-bottom: 16px; border-left: 3px solid var(--accent);
+      font-style: italic;
+    }
+    .script-text p { margin-bottom: 12px; }
+    .script-text p:last-child { margin-bottom: 0; }
+    .where-to-record { font-size: 0.8rem; color: var(--muted); display: flex; align-items: flex-start; gap: 8px; }
+    .where-to-record svg { width: 16px; height: 16px; stroke: var(--accent); fill: none; stroke-width: 2; flex-shrink: 0; margin-top: 2px; }
+    .where-to-record strong { color: var(--dark); }
+
+    /* ===== WHY I REACHED OUT ===== */
+    .why-reached-out { background: var(--deep); color: white; text-align: center; }
+    .why-reached-out h2 { font-size: 1.75rem; font-weight: 700; margin-bottom: 4px; }
+    .why-reached-out .sub { color: rgba(255,255,255,0.6); margin-bottom: 48px; font-size: 1rem; }
+    .outreach-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; text-align: left; }
+    @media (max-width: 768px) { .outreach-grid { grid-template-columns: 1fr; } }
+    .outreach-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 28px; }
+    .outreach-card h3 { font-size: 0.95rem; font-weight: 700; color: var(--accent-light); margin-bottom: 12px; }
+    .outreach-card p { font-size: 0.9rem; color: rgba(255,255,255,0.75); line-height: 1.7; }
+
+    /* ===== HOW WE HELP ===== */
+    .how-we-help { text-align: left; }
+    .how-we-help-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    @media (max-width: 768px) { .how-we-help-inner { grid-template-columns: 1fr; gap: 40px; } }
+    .how-we-help h2 { font-size: 1.75rem; font-weight: 700; color: var(--deep); margin-bottom: 16px; }
+    .how-we-help .body-text { font-size: 0.95rem; color: #555; line-height: 1.7; margin-bottom: 16px; }
+    .flow-card {
+      background: var(--light); border-radius: 20px; padding: 36px 32px;
+      display: flex; flex-direction: column; gap: 0;
+    }
+    .flow-step-row { display: flex; align-items: center; gap: 16px; padding: 16px 0; }
+    .flow-step-icon {
+      width: 48px; height: 48px; border-radius: 14px; background: var(--accent);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .flow-step-icon svg { width: 22px; height: 22px; stroke: var(--white); fill: none; stroke-width: 1.8; }
+    .flow-step-text h4 { font-size: 0.9rem; font-weight: 700; color: var(--deep); }
+    .flow-step-text p { font-size: 0.8rem; color: var(--muted); }
+    .flow-step-arrow {
+      display: flex; align-items: center; justify-content: center;
+      width: 48px; color: var(--accent); font-size: 1.1rem;
+    }
+    .flow-step-arrow svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; stroke-width: 2; }
+
+    /* ===== ABOUT US ===== */
+    .about-us { background: var(--light); }
+    .about-us-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    @media (max-width: 768px) { .about-us-inner { grid-template-columns: 1fr; gap: 32px; } }
+    .about-us-text h2 { font-size: 1.75rem; font-weight: 700; color: var(--deep); margin-bottom: 12px; }
+    .about-us-text .intro { font-size: 0.95rem; color: #555; line-height: 1.7; margin-bottom: 16px; }
+    .about-us-text .philosophy { font-size: 0.9rem; color: var(--muted); line-height: 1.7; border-left: 3px solid var(--accent); padding-left: 16px; font-style: italic; }
+    .team-cards { display: flex; flex-direction: column; gap: 20px; }
+    .team-card {
+      display: flex; align-items: center; gap: 20px;
+      background: var(--white); border-radius: 16px; padding: 24px;
+      border: 1px solid var(--border); transition: box-shadow 0.2s;
+    }
+    .team-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.05); }
+    .team-card img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 2px solid var(--border); }
+    .team-card-info h3 { font-size: 1rem; font-weight: 700; color: var(--deep); margin-bottom: 2px; }
+    .team-card-info .role { font-size: 0.75rem; color: var(--accent); font-weight: 600; margin-bottom: 6px; }
+    .team-card-info p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+    /* ===== FINAL CTA ===== */
+    .final-cta { background: var(--deep); color: white; text-align: center; padding-bottom: 40px; }
+    .final-cta h2 { font-size: 1.75rem; font-weight: 700; margin-bottom: 12px; }
+    .final-cta .body { color: rgba(255,255,255,0.7); font-size: 1rem; max-width: 640px; margin: 0 auto 40px; line-height: 1.7; }
+    .calendar-wrap { max-width: 680px; margin: 0 auto 32px; background: rgba(255,255,255,0.08); border-radius: 16px; padding: 8px; overflow: hidden; }
+    .calendar-wrap iframe { border-radius: 12px; }
+    .final-cta .email { color: rgba(255,255,255,0.6); font-size: 0.9rem; }
+    .final-cta .email a { color: var(--accent-light); font-weight: 600; }
+
+    /* ===== FOOTER ===== */
+    .footer { background: var(--deep); text-align: center; padding: 24px 0 32px; border-top: 1px solid rgba(255,255,255,0.08); }
+    .footer img { height: 24px; margin: 0 auto 12px; }
+    .footer p { font-size: 0.75rem; color: rgba(255,255,255,0.35); }
+  </style>
+</head>
+<body>
+
+  <!-- ===== TOP BAR ===== -->
+  <header class="top-bar">
+    <div class="container">
+      <div class="logos-wrap">
+        <img class="logo-clinic" src="logo-alma-care-nederland.png" alt="Alma Care">
+        <span class="divider">&times;</span>
+        <img class="logo-ttt" src="traffic-to-talks-logo.png" alt="TrafficToTalks">
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="container">
+      <h1>Sinan, ik heb dit gebouwd voor <span>Alma Care</span></h1>
+      <p class="subtitle">Een op maat gemaakte landingspagina, Meta advertentie-creatives, drie videoscripts en een aantal observaties over jullie bedrijf. Alles van jou, geheel vrijblijvend.</p>
+      <div class="video-placeholder" style="overflow:hidden;">
+        <iframe src="https://player.vimeo.com/video/1171738940?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="border-radius:16px;"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WAT ER IN ZIT ===== -->
+  <section class="whats-inside">
+    <div class="container">
+      <h2>Wat er in zit</h2>
+      <div class="inside-grid">
+        <div class="inside-card">
+          <div class="icon-wrap">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3>Landingspagina op maat</h3>
+          <p>Gebouwd voor Alma Care</p>
+        </div>
+        <div class="inside-card">
+          <div class="icon-wrap">
+            <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3>Meta Advertentiepakket</h3>
+          <p>Kant-en-klare creatives</p>
+        </div>
+        <div class="inside-card">
+          <div class="icon-wrap">
+            <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+          </div>
+          <h3>3 Videoscripts</h3>
+          <p>Klaar om op te nemen</p>
+        </div>
+        <div class="inside-card">
+          <div class="icon-wrap">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          </div>
+          <h3>Strategische Inzichten</h3>
+          <p>Voor jullie markt</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LANDINGSPAGINA PREVIEW ===== -->
+  <section class="landing-preview">
+    <div class="container">
+      <h2>Jullie Landingspagina op Maat</h2>
+      <p class="sub">Speciaal gebouwd voor patienten die ooglaseren overwegen bij Alma Care.</p>
+      <div class="browser-frame">
+        <div class="browser-bar">
+          <div class="browser-dot"></div>
+          <div class="browser-dot"></div>
+          <div class="browser-dot"></div>
+          <div class="url">alma-care-nederland-landing.vercel.app</div>
+        </div>
+        <img src="alma-care-nederland-landing-preview.png" alt="Landingspagina preview voor Alma Care" style="background: var(--light); min-height: 300px;">
+      </div>
+      <a href="https://alma-care-nederland-landing.vercel.app" target="_blank" class="btn-primary">
+        Bekijk Live
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== META ADS ===== -->
+  <section class="meta-ads">
+    <div class="container">
+      <h2>Meta Advertenties &mdash; Klaar om te draaien</h2>
+      <p class="sub">Statische advertentie-creatives gebouwd voor de doelgroep van Alma Care.</p>
+
+      <div class="ads-row">
+        <div class="ad-card active" onclick="selectAd(0, this)">
+          <div class="ad-img-wrap"><img src="ad-1.png" alt="Ad 1"></div>
+          <span class="funnel-tag tag-cold">Cold</span>
+        </div>
+        <div class="ad-card" onclick="selectAd(1, this)">
+          <div class="ad-img-wrap"><img src="ad-2.png" alt="Ad 2"></div>
+          <span class="funnel-tag tag-consideration">Consideration</span>
+        </div>
+        <div class="ad-card" onclick="selectAd(2, this)">
+          <div class="ad-img-wrap"><img src="ad-3.png" alt="Ad 3"></div>
+          <span class="funnel-tag tag-mid">Mid-funnel</span>
+        </div>
+        <div class="ad-card" onclick="selectAd(3, this)">
+          <div class="ad-img-wrap"><img src="ad-4.png" alt="Ad 4"></div>
+          <span class="funnel-tag tag-bottom">Bottom-funnel</span>
+        </div>
+        <div class="ad-card" onclick="selectAd(4, this)">
+          <div class="ad-img-wrap"><img src="ad-5.png" alt="Ad 5"></div>
+          <span class="funnel-tag tag-education">Educatie</span>
+        </div>
+      </div>
+
+      <!-- Ad detail: image + copy -->
+      <div class="ad-detail-panel" id="ad-detail">
+        <div class="ad-detail-img" id="ad-detail-img-wrap">
+          <img id="ad-detail-img" src="ad-1.png" alt="Ad preview">
+          <a id="ad-detail-download" class="ad-download-btn" href="ad-1.png" download>Download Afbeelding</a>
+        </div>
+        <div class="ad-detail-copy" id="ad-detail-copy">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+
+      <div class="context-box">
+        <p>Dit zijn geen willekeurige ontwerpen. Elke advertentie is gebouwd op basis van een gedetailleerd patient-avatar dat we voor Alma Care hebben opgesteld &mdash; we onderzochten Nederlanders en Belgen die overwegen om te ooglaseren, genoeg hebben van hun bril of contactlenzen, en op zoek zijn naar een betrouwbare, ervaren kliniek. De koppen, beelden en calls-to-action zijn allemaal gericht op die potentiele patienten.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== VIDEOSCRIPTS ===== -->
+  <section class="video-scripts">
+    <div class="container">
+      <h2>3 Video's die je deze week kunt opnemen</h2>
+      <p class="sub">Spreek-voor-de-camera scripts geschreven voor jullie markt. Geen bewerking nodig.</p>
+
+      <div class="scripts-list">
+        <!-- Script 1 -->
+        <div class="script-card">
+          <div class="script-header" onclick="toggleScript(this)">
+            <div class="script-number">1</div>
+            <div class="script-title">Mythbuster: Ooglaseren in Turkije is onveilig</div>
+            <svg class="script-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="script-body">
+            <div class="script-content">
+              <h4>Waarom dit werkt</h4>
+              <p class="why-text">De grootste twijfel bij potentiele patienten is veiligheid in het buitenland. Deze video pakt die angst direct aan met feiten over JCI-accreditatie, de ervaring van Dr. Goker en de 15 jaar garantie &mdash; precies wat mensen nodig hebben om vertrouwen te krijgen.</p>
+
+              <div class="script-text">
+                <p>"Ooglaseren in Turkije? Dat is toch gevaarlijk?" Dit is waarom dat niet klopt.</p>
+                <p>Veel mensen denken dat ooglaseren in het buitenland een risico is. Logisch. Je wilt het beste voor je ogen.</p>
+                <p>Maar wist je dat Acibadem Hospital in Istanbul JCI-geaccrediteerd is? Dat is dezelfde internationale kwaliteitsstandaard als de beste ziekenhuizen in Europa en Amerika.</p>
+                <p>Dr. Sinan Goker, de behandelend oogarts, heeft meer dan 70.000 ooglaserbehandelingen uitgevoerd. Hij is erevoorzitter van de International Society of Refractive Surgery.</p>
+                <p>Bij Alma Care krijg je 15 jaar garantie op je behandeling. Plus een Nederlandstalig aanspreekpunt en nazorg in Nederland.</p>
+                <p>Geen vage kliniek. Geen risico. Wereldklasse zorg, voor een eerlijke prijs.</p>
+              </div>
+
+              <div class="where-to-record"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span><strong>Waar op te nemen:</strong> Op kantoor in Rotterdam of via een professionele setting met Alma Care branding zichtbaar. Platform: Meta Reels / Instagram Stories (45-60 sec).</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Script 2 -->
+        <div class="script-card">
+          <div class="script-header" onclick="toggleScript(this)">
+            <div class="script-number">2</div>
+            <div class="script-title">Behind-the-scenes: Jouw VIP Ooglaser-arrangement</div>
+            <svg class="script-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="script-body">
+            <div class="script-content">
+              <h4>Waarom dit werkt</h4>
+              <p class="why-text">Mensen weten niet wat ze kunnen verwachten en die onzekerheid houdt ze tegen. Deze video loopt stap voor stap door het hele VIP-arrangement &mdash; van geschiktheidscheck tot nazorg &mdash; en maakt het proces benaderbaar en aantrekkelijk.</p>
+
+              <div class="script-text">
+                <p>Zo ziet jouw reis naar scherp zicht eruit &mdash; van Nederland tot Istanbul.</p>
+                <p>Het begint met een gratis geschiktheidscheck bij Alma Care. Online of op locatie.</p>
+                <p>Kom je in aanmerking? Dan regelen wij alles. Vlucht, hotel, transfers &mdash; jij hoeft nergens over na te denken.</p>
+                <p>In Istanbul word je opgehaald en naar Acibadem Hospital gebracht. Een van de grootste en modernste ziekenhuizen van Europa.</p>
+                <p>Dr. Sinan Goker voert een uitgebreide oogmeting uit en bespreekt de beste behandeling voor jouw ogen: LASIK, Femtosecond, of een andere techniek.</p>
+                <p>De behandeling zelf duurt slechts enkele minuten. Geen pijn. De volgende ochtend zie je al haarscherp.</p>
+                <p>Tussendoor geniet je van Istanbul. Een stedentrip die je leven verandert. Letterlijk.</p>
+                <p>Terug in Nederland kun je terecht bij ons voor controles en nazorg.</p>
+              </div>
+
+              <div class="where-to-record"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span><strong>Waar op te nemen:</strong> Mix van kantoor Rotterdam en beelden uit Istanbul (Acibadem Hospital, hotel, transfers). Platform: Meta Reels / YouTube Shorts (60-75 sec).</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Script 3 -->
+        <div class="script-card">
+          <div class="script-header" onclick="toggleScript(this)">
+            <div class="script-number">3</div>
+            <div class="script-title">Authority: Dr. Goker over 70.000+ behandelingen</div>
+            <svg class="script-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="script-body">
+            <div class="script-content">
+              <h4>Waarom dit werkt</h4>
+              <p class="why-text">Niets bouwt meer vertrouwen op dan echte cijfers. 70.000 behandelingen laat mensen stoppen met scrollen en positioneert Dr. Goker als de onbetwiste autoriteit in ooglaseren. Dit is de ultieme geloofwaardigheidsvideo.</p>
+
+              <div class="script-text">
+                <p>70.000 ogen behandeld. Dit is wat ik in 20 jaar heb geleerd.</p>
+                <p>Ik ben Dr. Sinan Goker, oogarts in Acibadem Hospital Istanbul. In meer dan 20 jaar heb ik ruim 70.000 ooglaserbehandelingen uitgevoerd.</p>
+                <p>Wat maakt onze aanpak anders? Ten eerste: technologie. Wij werken met de nieuwste Femtosecond-laser en Wavefront-analyse. Elke behandeling wordt op maat geprogrammeerd voor jouw unieke ogen.</p>
+                <p>Ten tweede: ervaring. Ik ben erevoorzitter van de International Society of Refractive Surgery. Ik heb collega's wereldwijd opgeleid in deze technieken.</p>
+                <p>Ten derde: zekerheid. Wij geven 15 jaar garantie op je behandeling. Omdat we vertrouwen hebben in ons werk.</p>
+                <p>Via Alma Care kunnen Nederlanders en Belgen terecht voor een VIP-arrangement. Persoonlijke begeleiding, alles geregeld, topkwaliteit zorg.</p>
+              </div>
+
+              <div class="where-to-record"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span><strong>Waar op te nemen:</strong> In het Acibadem Hospital of op de behandelkamer, met Dr. Goker in witte jas. Professioneel maar benaderbaar. Platform: Meta Reels / Facebook Video (60-75 sec).</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WAAROM IK CONTACT OPNAM ===== -->
+  <section class="why-reached-out">
+    <div class="container">
+      <h2>Waarom ik contact opnam met Alma Care</h2>
+      <p class="sub">Een aantal observaties na het onderzoeken van jullie bedrijf.</p>
+      <div class="outreach-grid">
+        <div class="outreach-card">
+          <h3>Wat jullie goed doen</h3>
+          <p>Alma Care heeft een sterke propositie met 20+ jaar ervaring, een zeer ervaren chef-arts (Dr. Sinan Goker, 70.000+ behandelingen), transparante prijzen, en een uniek all-inclusive VIP reisconcept. Veel patient-ervaringsverhalen op de website en een duidelijke laagste-prijs-garantie.</p>
+        </div>
+        <div class="outreach-card">
+          <h3>De kans die ik zie</h3>
+          <p>De website draait op een verouderd Divi WordPress-thema en mist moderne conversie-elementen zoals een prominente boekingsflow, social proof widgets, en geoptimaliseerde landingspagina's voor advertentiecampagnes. Er is geen zichtbare Google Reviews integratie of actuele beoordelingsscores. Met gerichte advertenties en een moderne landingspagina kan het conversiepercentage flink omhoog.</p>
+        </div>
+        <div class="outreach-card">
+          <h3>Waarom jullie een goede fit zijn</h3>
+          <p>Alma Care biedt een uniek product (volledig verzorgde ooglaser-reis naar Istanbul) tegen zeer scherpe prijzen met bewezen kwaliteit. Dit is ideaal voor performance marketing: de lage prijs en het all-inclusive concept zijn sterke hooks voor advertenties. De combinatie van ervaring, garantie en prijs maakt het een overtuigend aanbod dat goed converteert met de juiste landingspagina.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HOE WIJ HELPEN ===== -->
+  <section class="how-we-help">
+    <div class="container">
+      <div class="how-we-help-inner">
+        <div>
+          <h2>Hoe wij oogklinieken zoals jullie helpen</h2>
+          <p class="body-text">Wij bouwen marketingsystemen specifiek voor oogklinieken en lasercentra. Geen generieke "digitale marketing" &mdash; maar doelgerichte systemen die de volledige patientreis begrijpen, van de eerste Google-zoekopdracht tot een geboekte afspraak.</p>
+          <p class="body-text">Dat betekent Meta advertenties gericht op mensen die actief onderzoek doen naar ooglaseren. Landingspagina's die nieuwsgierige bezoekers omzetten in consultaanvragen. En geautomatiseerde opvolging die leads nurtured die nog niet klaar zijn &mdash; zodat ze boeken wanneer ze er wel klaar voor zijn.</p>
+          <p class="body-text">Het resultaat: jullie gaan elke afspraak in met kennis over de zorgen, tijdlijn en behandelinteresse van de patient, nog voordat je hallo zegt. Geen bandenkijkers meer. Geen no-shows meer. Alleen gekwalificeerde patienten op je agenda, klaar om de volgende stap te zetten.</p>
+        </div>
+        <div class="flow-card">
+          <div class="flow-step-row">
+            <div class="flow-step-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </div>
+            <div class="flow-step-text">
+              <h4>Gerichte Advertenties</h4>
+              <p>Bereik patienten die klaar zijn voor ooglaseren</p>
+            </div>
+          </div>
+          <div class="flow-step-arrow">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+          </div>
+          <div class="flow-step-row">
+            <div class="flow-step-icon">
+              <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>
+            </div>
+            <div class="flow-step-text">
+              <h4>Gekwalificeerde Leads</h4>
+              <p>Zorgen, tijdlijn en behandelinteresse</p>
+            </div>
+          </div>
+          <div class="flow-step-arrow">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+          </div>
+          <div class="flow-step-row">
+            <div class="flow-step-icon">
+              <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <div class="flow-step-text">
+              <h4>Geboekte Afspraken</h4>
+              <p>Op jullie agenda, klaar voor consult</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WIE WIJ ZIJN ===== -->
+  <section class="about-us">
+    <div class="container">
+      <div class="about-us-inner">
+        <div class="team-cards">
+          <div class="team-card">
+            <img src="mooiboi-floris (2).webp" alt="Floris">
+            <div class="team-card-info">
+              <h3>Floris</h3>
+              <div class="role">Funnels & Systemen</div>
+              <p>Brengt de hele patientreis in kaart &mdash; van advertentieklik tot geboekte afspraak &mdash; en bouwt het systeem dat ervoor zorgt dat er niets tussen wal en schip valt. Als een lead koud wordt, zoekt Floris uit waarom en lost het op.</p>
+            </div>
+          </div>
+          <div class="team-card">
+            <img src="mooiboi-timo (2).webp" alt="Timo">
+            <div class="team-card-info">
+              <h3>Timo</h3>
+              <div class="role">Advertenties & Messaging</div>
+              <p>Bepaalt wat je moet zeggen en waar, zodat mensen daadwerkelijk stoppen met scrollen. Schrijft de advertenties, regelt de media-inkoop en optimaliseert tot elke euro advertentiebudget omzet oplevert.</p>
+            </div>
+          </div>
+        </div>
+        <div class="about-us-text">
+          <h2>Wie wij zijn</h2>
+          <p class="intro">Wij zijn Floris en Timo &mdash; de twee mensen achter Traffic To Talks. We runnen geen groot bureau met accountmanagers en lagen bureaucratie. Wij zijn het gewoon. Strategie, advertenties, funnels, copy, tracking &mdash; wij doen alles. Als je met ons werkt, werk je met ons.</p>
+          <p class="intro">Dat is een bewuste keuze. De meeste bureaus verdelen rollen over verschillende teams: een accountmanager, een media-inkoper, een copywriter, een funnelbouwer &mdash; en niemand praat met elkaar. Wij beheersen het hele proces van begin tot eind. Als de advertenties het verkeerde verkeer aantrekken, fixen wij de advertenties. Als de funnel niet converteert, fixen wij de funnel. Geen vingerwijzen, geen wachten op andere afdelingen.</p>
+          <p class="philosophy">"We hebben alles wat je op deze pagina ziet gebouwd &mdash; de landingspagina, de advertenties, de scripts, deze delivery page &mdash; specifiek voor jullie bedrijf. Niet vanuit een template. Vanuit onderzoek."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FINAL CTA ===== -->
+  <section class="final-cta">
+    <div class="container">
+      <h2>Houd deze assets. Ze zijn van jullie.</h2>
+      <p class="body">Als je wilt zien hoe een compleet systeem eruitziet &mdash; content, advertenties, leadcapture, opvolging &mdash; dan praat ik graag 20 minuten. Zo niet, geen probleem.</p>
+
+      <div class="calendar-wrap">
+        <iframe src="https://api.leadconnectorhq.com/widget/booking/WvZjQzGXthiMC9JKMUGe" style="width: 100%;border:none;overflow: hidden;" scrolling="no" id="WvZjQzGXthiMC9JKMUGe_1774887763219"></iframe>
+        <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
+      </div>
+
+      <p class="email">Vragen? Neem direct contact op: <a href="mailto:info@traffictotalks.nl">info@traffictotalks.nl</a></p>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <img src="traffic-to-talks-logo.png" alt="TrafficToTalks">
+    <p>&copy; 2026 TrafficToTalks. Alle rechten voorbehouden.</p>
+  </footer>
+
+  <script>
+    // === AD COPY DATA ===
+    var adCopyData = [
+      {
+        img: 'ad-1.png',
+        primary: "Elke ochtend hetzelfde ritueel: bril zoeken, lenzen indoen, irritatie... Herkenbaar? Stel je voor dat je morgen wakker wordt en alles haarscherp ziet. Zonder bril. Zonder lenzen. Met het VIP ooglaser-arrangement van Alma Care wordt dat werkelijkheid. Behandeling in het wereldberoemde Acibadem Hospital Istanbul, door Dr. Sinan Goker met 70.000+ behandelingen ervaring. Inclusief reis, verblijf en 15 jaar garantie \u2014 voor een fractie van de Nederlandse prijs.",
+        headline: 'Definitief af van je bril of lenzen',
+        linkDesc: 'Gratis geschiktheidscheck \u2192',
+        cta: 'Meer informatie'
+      },
+      {
+        img: 'ad-2.png',
+        primary: "Vanochtend: bril beslaat, lenzen prikken, sportbril vergeten. Vanavond: zorgeloos genieten met haarscherp zicht. Duizenden Nederlanders gingen je voor. Zij kozen voor ooglaseren bij Alma Care en combineerden hun behandeling met een stedentrip Istanbul. Het resultaat? Vrijheid. Elke dag. Zonder gedoe. Ontdek of jij in aanmerking komt \u2014 het begint met een gratis check.",
+        headline: 'Van brildrager naar vrijheid',
+        linkDesc: 'Doe de gratis ogentest \u2192',
+        cta: 'Aanmelden'
+      },
+      {
+        img: 'ad-3.png',
+        primary: "Femtosecond-technologie: de nieuwste generatie ooglaseren. Geen mes, geen pijn, geen onzekerheid. Dr. Sinan Goker \u2014 erevoorzitter van de ISRS en pionier in refractieve chirurgie \u2014 heeft meer dan 70.000 behandelingen uitgevoerd met deze precisietechniek. De laser corrigeert jouw ogen in slechts enkele seconden, op maat geprogrammeerd met Wavefront-analyse. Bij Alma Care krijg je toegang tot dezelfde technologie als de wereldtop, voor een eerlijke prijs.",
+        headline: '70.000+ ogen behandeld met precisie',
+        linkDesc: 'Bekijk de behandelingen \u2192',
+        cta: 'Meer informatie'
+      },
+      {
+        img: 'ad-4.png',
+        primary: "70.000+ behandelingen. Sinds 2004. 15 jaar garantie. Behandeling in Acibadem Hospital \u2014 het grootste private ziekenhuis van Europa. Dr. Sinan Goker is erevoorzitter van de International Society of Refractive Surgery en wordt wereldwijd erkend als autoriteit in ooglaseren. Dit is geen budgetkliniek. Dit is topzorg, toegankelijk gemaakt door Alma Care. Inclusief persoonlijke begeleiding, reis en verblijf in Istanbul.",
+        headline: 'Vertrouwd door 70.000+ pati\u00ebnten',
+        linkDesc: 'Plan je gratis consult \u2192',
+        cta: 'Boek nu'
+      },
+      {
+        img: 'ad-5.png',
+        primary: "\"Is ooglaseren in Turkije wel veilig?\" We begrijpen die vraag. Daarom werkt Alma Care uitsluitend met Acibadem Hospital Istanbul \u2014 JCI-geaccrediteerd, dezelfde standaard als de beste ziekenhuizen ter wereld. Dr. Sinan Goker heeft 70.000+ behandelingen op zijn naam en is erevoorzitter van de ISRS. Je krijgt 15 jaar garantie, een Nederlandstalig aanspreekpunt en nazorg in Nederland. Geen gok. Zekerheid.",
+        headline: 'Veiligheid staat bij ons voorop',
+        linkDesc: 'Lees meer over onze aanpak \u2192',
+        cta: 'Meer informatie'
+      }
+    ];
+
+    // === SELECT AD ===
+    function selectAd(index, el) {
+      var cards = document.querySelectorAll('.ad-card');
+      for (var i = 0; i < cards.length; i++) { cards[i].classList.remove('active'); }
+      el.classList.add('active');
+
+      var ad = adCopyData[index];
+      var panel = document.getElementById('ad-detail');
+
+      panel.style.opacity = '0';
+      panel.style.transform = 'translateY(6px)';
+
+      setTimeout(function() {
+        document.getElementById('ad-detail-img').src = ad.img;
+        var dlBtn = document.getElementById('ad-detail-download');
+        dlBtn.href = ad.img;
+        dlBtn.setAttribute('download', ad.img);
+        dlBtn.onclick = function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          var link = document.createElement('a');
+          link.href = ad.img;
+          link.download = ad.img;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        };
+
+        var copyEl = document.getElementById('ad-detail-copy');
+        copyEl.innerHTML =
+          '<div><div class="copy-label">Primaire Tekst</div><div class="copy-primary">' + ad.primary.replace(/\n/g, '<br>') + '</div></div>' +
+          '<div><div class="copy-label">Koptekst</div><div class="copy-headline">' + ad.headline + '</div></div>' +
+          '<div><div class="copy-label">Link Beschrijving</div><div class="copy-link-desc">' + ad.linkDesc + '</div></div>' +
+          '<div><div class="copy-label">CTA Knop</div><div class="copy-cta-btn">' + ad.cta + '</div></div>';
+
+        panel.style.opacity = '1';
+        panel.style.transform = 'translateY(0)';
+      }, 200);
+    }
+
+    // === ACCORDION ===
+    function toggleScript(header) {
+      header.parentElement.classList.toggle('open');
+    }
+
+    // === INIT: select first ad ===
+    (function() {
+      var firstCard = document.querySelector('.ad-card');
+      if (firstCard) {
+        var panel = document.getElementById('ad-detail');
+        if (panel) { panel.style.transition = 'opacity 0.25s ease, transform 0.25s ease'; }
+        selectAd(0, firstCard);
+      }
+    })();
+  </script>
+</body>
+</html>
